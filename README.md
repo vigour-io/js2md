@@ -1,86 +1,86 @@
- js2md
-his crude little module converts JavaScript files to MarkDown files.
-t puts the multi-line comments as the normal text, and the code into code blocks.
+# js2md
+This crude little module converts JavaScript files to MarkDown files.
+It puts the multi-line comments as the normal text, and the code into code blocks.
 
-his is useful when you want commented code in a MarkDown format (for a README.md for instance).
+This is useful when you want commented code in a MarkDown format (for a README.md for instance).
 
-# Usage
-npm i -g` 
+## Usage
+`npm i -g` 
 
-js2md index.js > README.md`
+`js2md index.js > README.md`
 
 
-# Example
-his README.md is the effect of running js2md on [index.js](https://github.com/vigour-io/js2md/blob/master/index.js)
+## Example
+This README.md is the effect of running js2md on [index.js](https://github.com/vigour-io/js2md/blob/master/index.js)
 
-## Prepping variables
+### Prepping variables
 
 ```javascript
-ar output
-ar hasbegun
-ar incomments
+var output
+var hasbegun
+var incomments
 
-ar title = /([^#]|^)#[^#]/
-ar openingComment = /\/\*/
-ar closingComment = /\*\//
+var title = /([^#]|^)#[^#]/
+var openingComment = /\/\*/
+var closingComment = /\*\//
 
-ar indent
+var indent
 ```
 
-## Reading the file
-or reading the file I used the `line-by-line` [module](https://github.com/Osterjour/line-by-line)
-### Reading lines
+### Reading the file
+For reading the file I used the `line-by-line` [module](https://github.com/Osterjour/line-by-line)
+#### Reading lines
 
 ```javascript
-r.on('line', function (line) {
+lr.on('line', function (line) {
 
- var toWrite = null
- var change = false
+  var toWrite = null
+  var change = false
 
- if(incomments) {
-   if(closingComment.test(line)) {
-     change = true
-     toWrite = hasbegun && '\n```javascript\n'
-   }
- } else {
-   if(openingComment.test(line)) {
-     change = true
-     toWrite = hasbegun && '```\n\n'
-   }
- }
- 
- if(hasbegun) {
-   if(toWrite) {
-     output += toWrite
-   } else {
-     output += line.slice(indent) + '\n'
-   }
- } else if(incomments && (hasbegun = line.match(title))) {
-   indent = hasbegun.index + 1
-   output = line.slice(indent) + '\n'
- }
+  if(incomments) {
+    if(closingComment.test(line)) {
+      change = true
+      toWrite = hasbegun && '\n```javascript\n'
+    }
+  } else {
+    if(openingComment.test(line)) {
+      change = true
+      toWrite = hasbegun && '```\n\n'
+    }
+  }
+  
+  if(hasbegun) {
+    if(toWrite) {
+      output += toWrite
+    } else {
+      output += line.slice(indent) + '\n'
+    }
+  } else if(incomments && (hasbegun = line.match(title))) {
+    indent = hasbegun.index + hasbegun[0].indexOf('#')
+    output = line.slice(indent) + '\n'
+  }
 
- if(change) {
-   incomments = !incomments
- }
+  if(change) {
+    incomments = !incomments
+  }
 
-)
+})
 ```
 
-### When we're done
+#### When we're done
 
 ```javascript
-r.on('end', function () {
- output += '```\n\n'
- process.stdout.write(output)
-)
+lr.on('end', function () {
+  output += '```\n\n'
+  process.stdout.write(output)
+})
 ```
 
-### Error handling
+#### Error handling
 
 ```javascript
-r.on('error', function (err) {
- throw err
-)
+lr.on('error', function (err) {
+  throw err
+})
 ```
 
