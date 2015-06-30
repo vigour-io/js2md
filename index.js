@@ -59,7 +59,7 @@ lr.on('line', function (line) {
       output += line.slice(indent) + '\n'
     }
   } else if(incomments && (hasbegun = line.match(title))) {
-    indent = hasbegun.index
+    indent = hasbegun.index + hasbegun[0].indexOf('#')
     output = line.slice(indent) + '\n'
   }
 
