@@ -72,8 +72,8 @@ lr.on('line', function (line) {
 #### When we're done
 */
 lr.on('end', function () {
-    output += '```\n\n'
-    process.stdout.write(output)
+  output += '```\n\n'
+  process.stdout.write(output)
 })
 /*
 #### Error handling
@@ -81,5 +81,3 @@ lr.on('end', function () {
 lr.on('error', function (err) {
   throw err
 })
-
-
