@@ -34,35 +34,35 @@ For reading the file I used the `line-by-line` [module](https://github.com/Oster
 ```javascript
 lr.on('line', function (line) {
 
-	var toWrite = null
-	var change = false
+  var toWrite = null
+  var change = false
 
-	if(incomments) {
-		if(closingComment.test(line)) {
-			change = true
-			toWrite = hasbegun && '\n```javascript\n'
-		}
-	} else {
-		if(openingComment.test(line)) {
-			change = true
-			toWrite = hasbegun && '```\n\n'
-		}
-	}
-	
-	if(hasbegun) {
-		if(toWrite) {
-			output += toWrite
-		} else {
-			output += line.slice(indent) + '\n'
-		}
-	} else if(incomments && (hasbegun = line.match(title))) {
-		indent = hasbegun.index
-  	output = line.slice(indent) + '\n'
-	}
+  if(incomments) {
+    if(closingComment.test(line)) {
+      change = true
+      toWrite = hasbegun && '\n```javascript\n'
+    }
+  } else {
+    if(openingComment.test(line)) {
+      change = true
+      toWrite = hasbegun && '```\n\n'
+    }
+  }
+  
+  if(hasbegun) {
+    if(toWrite) {
+      output += toWrite
+    } else {
+      output += line.slice(indent) + '\n'
+    }
+  } else if(incomments && (hasbegun = line.match(title))) {
+    indent = hasbegun.index
+    output = line.slice(indent) + '\n'
+  }
 
-	if(change) {
-		incomments = !incomments
-	}
+  if(change) {
+    incomments = !incomments
+  }
 
 })
 ```
@@ -71,8 +71,8 @@ lr.on('line', function (line) {
 
 ```javascript
 lr.on('end', function () {
-    output += '```\n\n'
-    process.stdout.write(output)
+  output += '```\n\n'
+  process.stdout.write(output)
 })
 ```
 
@@ -82,7 +82,5 @@ lr.on('end', function () {
 lr.on('error', function (err) {
   throw err
 })
-
-
 ```
 
