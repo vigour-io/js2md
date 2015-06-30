@@ -5,12 +5,13 @@ It puts the multi-line comments as the normal text, and the code into code block
 This is useful when you want commented code in a MarkDown format (for a README.md for instance).
 
 ## Usage
-`npm i -g`
+`npm i -g` 
+
 `js2md index.js > README.md`
 
 
 ## Example
-This README.md is the effect of running js2md on [index.js]()
+This README.md is the effect of running js2md on [index.js](https://github.com/vigour-io/js2md/blob/master/index.js)
 
 ### Prepping variables
 
